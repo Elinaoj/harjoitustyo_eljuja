@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+            Django App
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'css/style.css' type="text/css" media="screen" %}">
+    <script src="{% static 'js/main.js' %}" defer></script>
+</head>
+<body>
+    <nav>
+        {% if user.is_authenticated %}
+        <a href="/">
+            <span role="img" aria-label="Home" title="Home">Home</span>
+        </a> | 
+        <a href="/myynti">
+            <span role="img" aria-label="Myynti" title="Myynti">Liput</span>
+        </a> | 
+        <a href="{% url 'posts:list' %}">
+            <span role="img" aria-label="Artikkelit" title="Artikkelit">Artikkelit</span>
+        </a> | 
+        
+            <a href="{% url 'posts:new-post' %}">
+                <span role="img" aria-label="Lisää Uusi Artikkeli" title="Uusi Artikkeli">Uusi</span>
+            </a> | 
+            <form class="logout" action="{% url 'users:logout' %}" method="post">
+                {% csrf_token %} 
+                <button class="logout-button" aria-label="User Logout" title="User Logout">Kirjaudu ulos</button>
+            </form>
+        {% else %}
+            <a href="{% url 'users:login' %}">
+                <span role="img" aria-label="Kirjaudu" title="Kirjaudu">Kirjaudu</span>
+            </a>
+        {% endif %}
+    </nav>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

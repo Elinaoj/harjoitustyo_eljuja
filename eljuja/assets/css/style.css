@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background-color: rgb(183, 107, 107);
+    color: whitesmoke;
+    font-size: 3rem;
+}
+
+nav {
+    padding: 1rem;
+    background-color: #ea7b57;
+    color: white;
+    font-size: 2.5rem;
+}
+
+main {
+    padding: 1rem;
+}
+
+section {
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+}
+
+h1,
+h2 {
+    font-size: 1.5rem;
+}
+
+p {
+    font-size: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: #db5d59;
+}
+
+a:hover {
+    opacity: .85;
+}
+
+.banner {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+}
+
+.errorlist li::marker {
+    content: ' 🚨 ';
+}
+
+.logout-button {
+    font-size: 1.5rem;
+    background-color: rgb(0, 0, 0, 0);
+    border: none;
+}
+
+logout-button:hover {
+    opacity: .85;
+}
