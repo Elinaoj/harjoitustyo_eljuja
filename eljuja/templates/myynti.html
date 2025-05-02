@@ -1,11 +1,37 @@
-{% extends 'layout.html' %}
+{% extends 'layout.html'%}
 
 {% block title %}
     Myynti
 {% endblock %}
 
 {% block content %}
+    <section>
     <h1>Myynti</h1>
-    <p>Pääsivu<a href="/"> Pääsivu</a> page.</p>
+    <a href="{% url 'posts:list' %}">
+        <p>artikkeli</p>
+        {% for post in posts %}
+        <article class='post' >
+            <h2>
+                <a href="{% url 'posts:page' slug=post.slug %}">
+                    {{ post.title }}
+                </h2>
+            </a>
+            <p>{{ post.date }} by {{ post.author }}</p>
+            <p>{{ post.body }}</p>
+        </article>
+        {% endfor%}
+    </a>
+    {% for post in posts %} 
+        <article class='post' >
+            <h2>
+                <a href="{% url 'posts:page' slug=post.slug %}">
+                    {{ post.title }}
+                </a>
+            </h2>
+            <p>{{ post.date }} by {{ post.author }}</p>
+            <p>{{ post.body }}</p>
+        </article>
+    {% endfor%}
+    </section>
 {% endblock %}
 
