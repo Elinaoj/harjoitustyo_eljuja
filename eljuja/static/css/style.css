@@ -79,3 +79,8 @@ button {
     font-size: 1.5rem;
     font-family: Brush Script MT, cursive;
 }
+
+th {
+    padding: 1rem;
+}
+

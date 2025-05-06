@@ -1,3 +1,9 @@
 /.venv
 /.vscode
-db.sqlite3
+db.sqlite3uv.lock
+*.old
+staticfiles
+logs
+uv.lock
+**/__pycache__
+*copy*
