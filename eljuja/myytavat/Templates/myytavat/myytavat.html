@@ -1,17 +1,20 @@
-{% extends "layout.html" %}
+
+{% extends 'layout.html'%}
 
 {% block title %}
-    Myytävät 
+    Myynti
 {% endblock %}
 
 {% block content %}
     <section>
-        <h1>Myytävä<table></table>:</h1>
-        {% for post in posts %}
-            <article class='post' >
-                <p href=""> {{ post.artikkeli }} {{ post.hinta }} €  {{ post.artikkeli_id }} 
-                </p>
-            </article>
-        {% endfor%}
+    <h1>Myynti</h1>
+    <p>Taloyhtiövalinta</p>
+    <p>vuosivalinta koodissa</p>
+    <p>asunto</p>
+        <form class="form-with-validation" action="{% url 'myytavat:myytava' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %} 
+            {{ form }}
+            <button class="form-submit">Lisää myynti</button>
+        </form>
     </section>
 {% endblock %}

@@ -3,10 +3,10 @@ from . import models
 from posts.models import Post
 
 
-class LuoMyynti(forms.ModelForm):
+class CreateMyytava(forms.ModelForm):
     class Meta:
-        model = models.eljuja
-        fields = ['Post.artikkeli_id', 'hinta', 'kpl']
+        model = models.Myytava
+        fields = ['kpl']
 
 
 #class CreatePost(forms.ModelForm):

@@ -4,10 +4,15 @@ from posts.models import Post
 
 # Create your models here.
 
-class Myytavat(models.Model):
+class Myytava(models.Model):
     kpl = models.IntegerField(default=0)
-    artikkeli_id = Post.artikkeli_id
+#    artikkeli_id = Post.artikkeli_id
+#    artikkeli = Post.artikkeli
+#    hinta = Post.artikkeli
+#    lisatietoja = Post.lisatietoja
 
+    def __str__(self):
+        return self.kpl
 
 #TALOYHTIO_CHOICES = (('Aatelitie_3', 'AATELITIE_3'), ('Aatelitie_5_7', 'AATELITIE_5_7'), ('Aatelisherra', 'AATELISHERRA', ('Aatelisrouva', 'AATELISROUVA'), 'Renkipoika', 'RENKIPOIKA'), ('Piikatytto', 'PIIKATYTTO'), ('Omakotitalot', 'OMAKOTITALOT'))
 
@@ -28,5 +33,5 @@ class TaloyhtiotModel(models.Model):
     #author = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     
 
-#    def __str__(self):
-#        return self.artikkeli
+    def __str__(self):
+        return self.artikkeli
