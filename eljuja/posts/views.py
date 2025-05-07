@@ -6,13 +6,17 @@ from . import forms
 
 
 def posts_list(request):
-    posts = Post.objects.all().order_by('-date')
+    posts = Post.objects.all()
     return render(request, 'posts/posts_list.html', {'posts': posts})
 
 
-def post_page(request, slug):
-    post = Post.objects.get(slug=slug)
-    return render(request, 'posts/post_page.html', {'post': post})
+def post_page(request):
+    posts = Post.objects.all()
+    return render(request, 'posts/post_page.html', {'posts': posts})
+
+def post_new(request):
+    posts = Post.objects.all()
+    return render (request, 'posts/post_new.html', { 'posts': posts })
 
 @login_required(login_url="/users/login/")
 def post_new(request):
@@ -22,9 +26,8 @@ def post_new(request):
             newpost = form.save(commit=False) 
             newpost.author = request.user 
             newpost.save()
-            return redirect('posts:list')
+            return  render(request, 'posts/post_new.html', { 'form': form })
     else:
         form = forms.CreatePost()
-    return render(request, 'posts/post_new.html', { 'form': form }) 
-
+    return render(request, 'posts/post_new.html', { 'form': form })
 

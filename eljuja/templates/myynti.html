@@ -1,3 +1,4 @@
+
 {% extends 'layout.html'%}
 
 {% block title %}
@@ -7,31 +8,17 @@
 {% block content %}
     <section>
     <h1>Myynti</h1>
-    <a href="{% url 'posts:list' %}">
-        <p>artikkeli</p>
-        {% for post in posts %}
-        <article class='post' >
-            <h2>
-                <a href="{% url 'posts:page' slug=post.slug %}">
-                    {{ post.title }}
-                </h2>
-            </a>
-            <p>{{ post.date }} by {{ post.author }}</p>
-            <p>{{ post.body }}</p>
-        </article>
-        {% endfor%}
-    </a>
-    {% for post in posts %} 
-        <article class='post' >
-            <h2>
-                <a href="{% url 'posts:page' slug=post.slug %}">
-                    {{ post.title }}
-                </a>
-            </h2>
-            <p>{{ post.date }} by {{ post.author }}</p>
-            <p>{{ post.body }}</p>
-        </article>
-    {% endfor%}
+    <p>Taloyhtiövalinta</p>
+    <p>vuosivalinta koodissa</p>
+    <p>asunto</p>
+    <h1>Artikkelit:</h1>
+        <form class="form-with-validation" action="{% url 'posts:new-post' %}" method="post" enctype="multipart/form-data">
+            {% for post in posts %}
+                <article class='post' >
+                    <p href=""> {{ post.artikkeli }} {{ post.hinta }} € {{ myytavat.kpl }}
+                    </p>
+                </article>
+            {% endfor %}
+        </form>
     </section>
 {% endblock %}
-

@@ -7,10 +7,23 @@
 {% block content %}
     <section>
         <h1>Uusi Artikkeli</h1>
+        <p>id, jotta voi järjestää fiksusti myyntisivulle, myös lisätietokentän mukaan järjestys</p>
+        <p>vuosivalinta, miten olisi fiksuin tehdä? tarvitaanko?</p>
         <form class="form-with-validation" action="{% url 'posts:new-post' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %} 
             {{ form }}
             <button class="form-submit">Lisää artikkeli</button>
         </form>
+    </section>
+    <section>
+        <h1>Artikkelit:</h1>
+        {% for post in posts %}
+            <p>k</p>
+            <article class='post' >
+                <p href=""> {{ post.artikkeli }} {{ post.hinta }} €
+                </p>
+            </article>
+        {% endfor %}
+        <p>h</p>
     </section>
 {% endblock %}

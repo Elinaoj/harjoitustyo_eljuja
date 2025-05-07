@@ -1,0 +1,20 @@
+
+{% extends 'layout.html'%}
+
+{% block title %}
+    Myynti
+{% endblock %}
+
+{% block content %}
+    <section>
+    <h1>Myynti</h1>
+    <p>Taloyhtiövalinta</p>
+    <p>vuosivalinta koodissa</p>
+    <p>asunto</p>
+        <form class="form-with-validation" action="{% url 'myytavat:myytava' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %} 
+            {{ form }}
+            <button class="form-submit">Lisää myynti</button>
+        </form>
+    </section>
+{% endblock %}
