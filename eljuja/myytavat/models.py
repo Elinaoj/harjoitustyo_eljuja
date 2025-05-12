@@ -4,11 +4,18 @@ from posts.models import Post
 
 # Create your models here.
 
+# Jos teet muutoksia aja migrations :
+# py (tai) python manage.py makemigrations (tähän voi laittaa app, jos ajaa vain yhden app)
+# py (tai) python manage.py migrate
+
+
+
 class Myytava(models.Model):
     kpl = models.IntegerField(default=0)
+    #monivalinta = models.ManyToManyField("app.Model", verbose_name=("16.30", "17.00", "17.30", "18.00"))
 #    artikkeli_id = Post.artikkeli_id
-#    artikkeli = Post.artikkeli
-#    hinta = Post.artikkeli
+    artikkeli = Post.artikkeli
+#    hinta = Post.hinta
 #    lisatietoja = Post.lisatietoja
 
     def __str__(self):

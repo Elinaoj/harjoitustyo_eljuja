@@ -12,13 +12,25 @@
     <p>vuosivalinta koodissa</p>
     <p>asunto</p>
     <h1>Artikkelit:</h1>
-        <form class="form-with-validation" action="{% url 'posts:new-post' %}" method="post" enctype="multipart/form-data">
-            {% for post in posts %}
-                <article class='post' >
-                    <p href=""> {{ post.artikkeli }} {{ post.hinta }} € {{ myytavat.kpl }}
-                    </p>
-                </article>
-            {% endfor %}
-        </form>
-    </section>
+    <form> 
+
+            {% csrf_token %}
+            {{ form.aika }}
+
+    {% for post in posts %}
+        <article class='post' >
+            <table>
+                <th href="{% url "posts:list" %}">
+                    {{ post.artikkeli }} 
+                </th>
+                <td>{{ post.hinta }} € </td>
+                <td>
+                    <label for="kpl"> Kpl:</label>
+                    <input type="number" id="kpl" name="Kpl" step="1">
+                </td>
+            </table>
+        </article>
+    {% endfor%}
+    <input type="submit" value="Submit">
+    </form>
 {% endblock %}

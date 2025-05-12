@@ -8,13 +8,22 @@
 {% block content %}
     <section>
     <h1>Myynti</h1>
-    <p>Taloyhtiövalinta</p>
-    <p>vuosivalinta koodissa</p>
-    <p>asunto</p>
-        <form class="form-with-validation" action="{% url 'myytavat:myytava' %}" method="post" enctype="multipart/form-data">
+    <p>vuosivalinta koodissa, ei näy</p>
+    <p>Taloyhtiövalinta --> asunnon valinta</p>
+    <p>Akuisten passi</p>
+    <p>Lasten passi</p>
+    <p>ruokailuaika 16.30, 17.00, 17.30, 18.00</p>
+    <p>Allergiat, monivalinta: M, G, V, VE</p>
+    <p>Muut lisätyt artikkelit</p>
+    <form class="form-with-validation" action="{% url 'myytavat:myytava' %}" method="post" enctype="multipart/form-data">
+        {% for post in posts %}
+            <p>post.artikkeli</p>
+        {% endfor %}
             {% csrf_token %} 
+
             {{ form }}
             <button class="form-submit">Lisää myynti</button>
+
         </form>
     </section>
 {% endblock %}
