@@ -6,6 +6,7 @@ from posts.models import Post
 class CreateMyytava(forms.ModelForm):
     class Meta:
         model = models.Myytava
+
         fields = ['kpl']
 
 
