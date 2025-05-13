@@ -6,5 +6,8 @@ uv.lock
 **/__pycache__
 *copy*
 
+# Tietokanta tiedostoa ei tarvitse tallettaa gigthubiin
+db.sqlite3
+
 # .pyc files. Compiled bytecode of Python source files.
 *.py[cod]
