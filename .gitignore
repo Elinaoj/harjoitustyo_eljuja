@@ -3,6 +3,6 @@
 db.sqlite3uv.lock
 *.old
 uv.lock
-**/__pycache__
+**/__pycache__**
 *copy*
 
