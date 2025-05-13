@@ -7,7 +7,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         Asunto.objects.all().delete()
         taloyhtiot = [
-            'As1', 'As2', 'As3'
+            'AATELITIE_3', 'AATELITIE_5_7', 'AATELISHERRA', 'AATELISROUVA', 'RENKIPOIKA', 'PIIKATYTTO', 'OMAKOTITALOT'
         ]
 
         if not Taloyhtio.objects.count():
