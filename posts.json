@@ -1,0 +1,1 @@
+[{"stmt":"SELECT * FROM posts_post;","header":["id","hinta","artikkeli","lisatietoja"],"rows":[["1","20.0","Passi","-"],["2","5.0","Lasten passi","-"],["3","3.0","limu","--"],["4","3.0","moctail","-"],["5","1.0","nakki","-"],["6","1.0","hh","-"],["7","1.0","ss","-"]]}]
