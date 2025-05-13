@@ -3,9 +3,12 @@ from posts.models import Post
 from .models import Myytava
 from . import forms
 from django.views.generic.detail import DetailView
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
+@login_required
 def myytavat(request):
     posts = Post.objects.all()
     if request.method == "POST":
