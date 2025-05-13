@@ -8,11 +8,11 @@
 {% block content %}
     <section>
     <h1>Myynti</h1>
-        <select class="custom-select mb-4" name="taloyhtio"
+        {% comment %} <select class="custom-select mb-4" name="taloyhtio"
             {% for taloyhtio in taloyhtiot %}
                 <option value{{taloyhtio.pk>{{ taloyhtio.name }}</option>
             {% endfor %}
-            </select>
+            </select> {% endcomment %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 .dropbtn {
