@@ -6,3 +6,5 @@ uv.lock
 **/__pycache__
 *copy*
 
+# .pyc files. Compiled bytecode of Python source files.
+*.py[cod]
