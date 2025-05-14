@@ -26,10 +26,22 @@ class Kpl(models.Model):
     def __str__(self):
         return self.kpl
 
-class TaloyhtiotModel(models.Model):
-    TALOYHTIO_CHOICES = {'AATELITIE_3': 'Aatelitie_3', 'AATELITIE_5_7': 'Aatelitie_5_7', 'AATELISHERRA': 'Aatelisherra', 'AATELISROUVA': 'Aatelisrouva', 'RENKIPOIKA': 'Renkipoika', 'PIIKATYTTO': 'Piikatytto', 'OMAKOTITALOT': 'Omakotitalot'}
-    name = 'Taloyhtiö'
-    taloyhtio = models.CharField(max_length=30, choices=TALOYHTIO_CHOICES)
+# class TaloyhtiotModel(models.Model):
+#     TALOYHTIO_CHOICES = {'AATELITIE_3': 'Aatelitie_3', 'AATELITIE_5_7': 'Aatelitie_5_7', 'AATELISHERRA': 'Aatelisherra', 'AATELISROUVA': 'Aatelisrouva', 'RENKIPOIKA': 'Renkipoika', 'PIIKATYTTO': 'Piikatytto', 'OMAKOTITALOT': 'Omakotitalot'}
+#     name = 'Taloyhtiö'
+#     taloyhtio = models.CharField(max_length=30, choices=TALOYHTIO_CHOICES)
+
+
+class Taloyhtio(models.Model):
+     name = models.CharField(max_length=128)
+
+
+class Asunto(models.Model):
+    name = models.CharField(max_length=128)
+    taloyhtio = models.ForeignKey(Taloyhtio, on_delete=models.CASCADE, related_name='asunnot')
+
+    
+
 
 class aika(models.Model):
     AIKA1 = '16.30'

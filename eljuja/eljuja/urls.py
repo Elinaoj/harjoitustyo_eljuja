@@ -29,7 +29,7 @@ urlpatterns = [
     path('myynti/', views.myynti),
     path('posts/', include('posts.urls')),
     path('users/', include('users.urls')),
-    path('myytavat/', include('myytavat.urls'))
+    path('', views.taloyhtiot, name='taloyhtiot'),
 ]
 
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
