@@ -14,11 +14,11 @@ def post_page(request):
     posts = Post.objects.all()
     return render(request, 'posts/post_page.html', {'posts': posts})
 
-def post_new(request):
-    posts = Post.objects.all()
-    return render (request, 'posts/post_new.html', { 'posts': posts })
+# def post_new(request):
+#     posts = Post.objects.all()
+#     return render (request, 'posts/post_new.html', { 'posts': posts })
 
-@login_required(login_url="/users/login/")
+@login_required
 def post_new(request):
     if request.method == 'POST': 
         form = forms.CreatePost(request.POST, request.FILES) 

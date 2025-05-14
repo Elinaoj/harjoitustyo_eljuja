@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'posts',
     'users',
-    'myytavat',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +117,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
+LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL = '/myynti/'
 
 STATIC_ROOT = BASE_DIR / 'assets'
 MEDIA_ROOT = BASE_DIR / 'media'
