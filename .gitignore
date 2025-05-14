@@ -3,9 +3,9 @@
 db.sqlite3uv.lock
 *.old
 uv.lock
-**/__pycache__
+**/__pycache__**
+*.pyc
 *copy*
-
 # Tietokanta tiedostoa ei tarvitse tallettaa gigthubiin
 db.sqlite3
 

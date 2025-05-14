@@ -2,6 +2,8 @@
 from django.shortcuts import render
 from posts.models import Post
 from posts.models import Taloyhtio, Asunto
+from django.contrib.auth.decorators import login_required
+
 
 #def register(request):
 #    return render(request, 'register.html')
@@ -10,6 +12,7 @@ def homepage(request):
     #return HttpResponse('Pääsivu')
     return render(request, 'home.html')
 
+@login_required
 def myynti(request):
     # return HttpResponse('Myynti')
     posts = Post.objects.all()
