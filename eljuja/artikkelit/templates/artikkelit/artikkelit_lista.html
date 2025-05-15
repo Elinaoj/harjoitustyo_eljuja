@@ -7,9 +7,9 @@
 {% block content %}
     <section>
         <h1>Artikkelit:</h1>
-        {% for post in posts %}
-            <article class='post' >
-                <p href=""> {{ post.artikkeli }} {{ post.hinta }} €  
+        {% for artikkeli in artikkelit %}
+            <article class='artikkeli' >
+                <p href=""> {{ artikkeli.artikkeli }} {{ artikkeli.hinta }} €  
                 </p>
             </article>
         {% endfor%}

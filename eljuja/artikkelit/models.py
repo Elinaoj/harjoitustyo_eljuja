@@ -5,7 +5,7 @@ from django.forms import ModelForm
 
 # Create your models here.
 
-class Post(models.Model):
+class Artikkeli(models.Model):
     #Tähän artikkelityypin valinta (liput, juomat) ja artikkeli_id, jolla voidaan järjestää artikkelit fiksusti
     artikkeli = models.CharField(max_length=75)
     hinta = models.FloatField(default=0)
@@ -40,24 +40,25 @@ class Asunto(models.Model):
     name = models.CharField(max_length=128)
     taloyhtio = models.ForeignKey(Taloyhtio, on_delete=models.CASCADE, related_name='asunnot')
 
-    
+class Aika(models.Model):
+    aika = models.CharField(max_length=5)     
 
 
-class aika(models.Model):
-    AIKA1 = '16.30'
-    AIKA2 = '17.00'
-    AIKA3 = '17.30'
-    AIKA4 = '18.00'
-    AIKA_CHOICES = {
-    AIKA1: '16.30',
-    AIKA2: '17.00',
-    AIKA3: '17.30',
-    AIKA4: '18.00'
-    }
-    aika = models.CharField(max_length=5, choices=AIKA_CHOICES, default=AIKA1)
+#class aika(models.Model):
+#    AIKA1 = '16.30'
+#    AIKA2 = '17.00'
+#    AIKA3 = '17.30'
+#    AIKA4 = '18.00'
+#    AIKA_CHOICES = {
+#    AIKA1: '16.30',
+#    AIKA2: '17.00',
+#    AIKA3: '17.30',
+#    AIKA4: '18.00'
+#    }
+#    aika = models.CharField(max_length=5, choices=AIKA_CHOICES, default=AIKA1)
 
-    def __str__(self):
-         return self.aika
+#    def __str__(self):
+#         return self.aika
     
 
 

@@ -10,7 +10,7 @@ def register_view(request):
         form = UserCreationForm(request.POST) 
         if form.is_valid(): 
             login(request, form.save())
-            return redirect("posts:list")
+            return redirect("artikkelit:lista")
     else:
         form = UserCreationForm()
     return render(request, "users/register.html", { "form": form })
@@ -23,7 +23,7 @@ def login_view(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
-                return redirect("posts:list")
+                return redirect("artikkelit:lista")
     else: 
         form = AuthenticationForm()
     return render(request, "users/login.html", { "form": form })
@@ -32,5 +32,5 @@ def login_view(request):
 def logout_view(request):
     if request.method == "POST":
         logout(request)    
-        return redirect("posts:list")
+        return redirect("artikkelit:lista")
     
