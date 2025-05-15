@@ -27,7 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.homepage),
     path('myynti/', views.myynti),
-    path('posts/', include('posts.urls')),
+    path('artikkelit/', include('artikkelit.urls')),
     path('users/', include('users.urls')),
 ]
 

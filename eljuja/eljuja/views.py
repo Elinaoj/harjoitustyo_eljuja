@@ -1,7 +1,7 @@
 #from django.http import HttpResponse
 from django.shortcuts import render
-from posts.models import Post
-from posts.models import Taloyhtio, Asunto
+from artikkelit.models import Artikkeli
+from artikkelit.models import Taloyhtio, Asunto
 from django.contrib.auth.decorators import login_required
 
 
@@ -15,9 +15,9 @@ def homepage(request):
 @login_required
 def myynti(request):
     # return HttpResponse('Myynti')
-    posts = Post.objects.all()
+    artikkelit = Artikkeli.objects.all()
 
-    return render(request, 'myynti.html', { 'posts': posts })
+    return render(request, 'myynti.html', { 'artikkelit': artikkelit })
 
 def taloyhtio(request):
     taloyhtiot = ["Aatelitie_3", "Aatelitie_5_7", "Aatelisherra", "Aatelisrouva", "Renkipoika", "Piikatytto", "Omakotitalot"]

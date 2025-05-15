@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from posts.models import Taloyhtio, Asunto
+from artikkelit.models import Taloyhtio, Asunto
 
 class Command(BaseCommand):
     help = 'Lataa Taloyhtiot ja Asunnot'

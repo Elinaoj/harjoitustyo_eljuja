@@ -69,17 +69,22 @@
     <p>asunto</p>
     <h1>Artikkelit:</h1>
     <form> 
-
+      <select name="aika" class="custom-select mb-4">
+        <option selected></option>
+          {% for aika in ajat %}
+            <option value="{{ajat.aika}}"></option>
+          {% endfor %}
+      </select>
             {% csrf_token %}
-            {{ form.aika }}
+            {{ aika }}
 
-    {% for post in posts %}
-        <article class='post' >
+    {% for artikkeli in artikkelit %}
+        <article class='artikkeli' >
             <table>
-                <th href="{% url "posts:list" %}">
-                    {{ post.artikkeli }} 
+                <th href="{% url "artikkelit:lista" %}">
+                    {{ artikkeli.artikkeli }} 
                 </th>
-                <td>{{ post.hinta }} € </td>
+                <td>{{ artikkeli.hinta }} € </td>
                 <td>
                     <label for="kpl"> Kpl:</label>
                     <input type="number" id="kpl" name="Kpl" step="1">
