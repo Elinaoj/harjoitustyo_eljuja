@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from artikkelit.models import Artikkeli
 from artikkelit.models import Taloyhtio, Asunto
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 
 
 #def register(request):
@@ -12,8 +12,9 @@ def homepage(request):
     #return HttpResponse('Pääsivu')
     return render(request, 'home.html')
 
-@login_required
 def myynti(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden("Kirjaudu ensin sisään.")
     # return HttpResponse('Myynti')
     artikkelit = Artikkeli.objects.all()
 
