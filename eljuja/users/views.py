@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm 
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 
 # Create your views here.
@@ -23,7 +24,7 @@ def login_view(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
-                return redirect("artikkelit:lista")
+                return redirect(settings.LOGIN_REDIRECT_URL)
     else: 
         form = AuthenticationForm()
     return render(request, "users/login.html", { "form": form })
@@ -32,5 +33,4 @@ def login_view(request):
 def logout_view(request):
     if request.method == "POST":
         logout(request)    
-        return redirect("artikkelit:lista")
-    
+        return redirect("users:login")
