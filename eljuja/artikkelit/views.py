@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from .models import Artikkeli
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 from . import forms
 # Create your views here.
 
 
 def artikkelit_lista(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden("Kirjaudu ensin sisään.")
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("Sinulla ei ole oikeuksia käyttää tätä sivua.")
     artikkelit = Artikkeli.objects.all()
     return render(request, 'artikkelit/artikkelit_lista.html', {'artikkelit': artikkelit})
 
@@ -14,8 +18,15 @@ def artikkeli_page(request):
     artikkelit = Artikkeli.objects.all()
     return render(request, 'artikkelit/artikkeli_sivu.html', {'artikkelit': artikkelit})
 
-@login_required
+# def artikkeli_uusi(request):     
+#     artikkelit = Artikkeli.objects.all()
+#     return render (request, 'artikkelit/artikkeli_uusi.html', { 'artikkelit': artikkelit })
+
 def artikkeli_uusi(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden("Kirjaudu ensin sisään.")
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("Sinulla ei ole oikeuksia käyttää tätä sivua.")
     if request.method == 'POST': 
         form = forms.CreateArtikkeli(request.POST, request.FILES) 
         if form.is_valid():
