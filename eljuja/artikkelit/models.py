@@ -10,6 +10,7 @@ class Artikkeli(models.Model):
     artikkeli = models.CharField(max_length=75)
     hinta = models.FloatField(default=0)
     lisatietoja = models.CharField()
+    
 
     def __str__(self):
             return self.artikkeli
@@ -41,7 +42,11 @@ class Asunto(models.Model):
     taloyhtio = models.ForeignKey(Taloyhtio, on_delete=models.CASCADE, related_name='asunnot')
 
 class Aika(models.Model):
-    aika = models.CharField(max_length=5)     
+    aika = models.CharField(max_length=5) 
+
+    def __str__(self):
+         return self.aika   
+
 
 
 #class aika(models.Model):
