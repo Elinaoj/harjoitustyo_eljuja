@@ -38,9 +38,3 @@ def artikkeli_uusi(request):
         form = forms.CreateArtikkeli()
     return render(request, 'artikkelit/artikkeli_uusi.html', { 'form': form })
 
-#def aika(request):
-#    ajat = [
-#        '16.30', '17.00', '17.30', '18.00'
-#    ]
-#    context = {'ajat': ajat}
-#    return render(request, 'myynti.html', context)

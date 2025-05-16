@@ -12,16 +12,21 @@
     <p>asunto</p>
     <h1>Artikkelit:</h1>
     <form> 
-      <select name="aika" class="custom-select mb-4">
-        <option selected></option>
-          {% for aika in ajat %}
-            <option value="{{ajat.aika}}"></option>
-          {% endfor %}
-      </select>
-            {% csrf_token %}
-            {{ aika }}
-
-    {% for artikkeli in artikkelit %}
+        <article>
+            <label for="id_aika_0">16.30
+                <input type="radio" name="aika" value="16.00" required id="id_aika_0">
+            </label>
+            <label for="id_aika_1">17.00
+                <input type="radio" name="aika" value="16.30" required id="id_aika_1">
+            </label>
+            <label for="id_aika_0">17.30
+                <input type="radio" name="aika" value="16.00" required id="id_aika_0">
+            </label>
+            <label for="id_aika_1">18.00
+                <input type="radio" name="aika" value="16.30" required id="id_aika_1">
+            </label>
+        </article>
+        {% for artikkeli in artikkelit %}
         <article class='artikkeli' >
             <table>
                 <th href="{% url "artikkelit:lista" %}">
