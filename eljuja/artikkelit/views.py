@@ -14,10 +14,6 @@ def artikkeli_page(request):
     artikkelit = Artikkeli.objects.all()
     return render(request, 'artikkelit/artikkeli_sivu.html', {'artikkelit': artikkelit})
 
-#def artikkeli_uusi(request):     
-#    artikkelit = Artikkeli.objects.all()
-#    return render (request, 'artikkelit/artikkeli_uusi.html', { 'artikkelit': artikkelit })
-
 @login_required
 def artikkeli_uusi(request):
     if request.method == 'POST': 
