@@ -6,13 +6,27 @@
 {% endblock %}
 
 {% block content %}
+    <h2>Valitse ruokailuaika</h2>
+
+    <form method="POST">   <!-- Lomake lähettää dataa -->
+        {% csrf_token %}
+
+        <!-- Näytetään radiovalinnat, jotka tulevat forms.ModelFormista -->
+        {{ aika_form.aika }}
+
+        <input type="submit" value="Lähetä">
+
+    </form>
+
+
+
 </head>
     <p>Taloyhtiövalinta</p>
     <p>vuosivalinta uusi koodissa</p>
     <p>asunto</p>
     <h1>Artikkelit:</h1>
     <form> 
-        <article>
+        <!-- <article>
             <label for="id_aika_0">16.30
                 <input type="radio" name="aika" value="16.00" required id="id_aika_0">
             </label>
@@ -25,7 +39,7 @@
             <label for="id_aika_1">18.00
                 <input type="radio" name="aika" value="16.30" required id="id_aika_1">
             </label>
-        </article>
+        </article> -->
         {% for artikkeli in artikkelit %}
         <article class='artikkeli' >
             <table>

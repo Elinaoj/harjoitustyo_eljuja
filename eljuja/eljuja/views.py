@@ -3,6 +3,7 @@ from django.shortcuts import render
 from artikkelit.models import Artikkeli
 from artikkelit.models import Taloyhtio, Asunto
 from django.http import HttpResponseForbidden
+from artikkelit.forms import AikaForm
 
 
 #def register(request):
@@ -18,7 +19,11 @@ def myynti(request):
     # return HttpResponse('Myynti')
     artikkelit = Artikkeli.objects.all()
 
-    return render(request, 'myynti.html', { 'artikkelit': artikkelit })
+    aika_form = AikaForm(request.POST or None)
+    if request.method == 'POST' and aika_form.is_valid():
+        aika_form.save()
+
+    return render(request, 'myynti.html', { 'artikkelit': artikkelit, 'aika_form': aika_form})
 
 def taloyhtio(request):
     taloyhtiot = ["Aatelitie_3", "Aatelitie_5_7", "Aatelisherra", "Aatelisrouva", "Renkipoika", "Piikatytto", "Omakotitalot"]
