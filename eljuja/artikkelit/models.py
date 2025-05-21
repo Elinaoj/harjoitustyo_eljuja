@@ -13,7 +13,7 @@ class Artikkeli(models.Model):
     
 
     def __str__(self):
-            return self.artikkeli
+        return self.artikkeli
 
 #class Node(models.Model):
     #artikkeli_id = models.CharField(primary_key=True)
@@ -34,7 +34,7 @@ class Kpl(models.Model):
 
 
 class Taloyhtio(models.Model):
-     name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128)
 
 
 class Asunto(models.Model):
@@ -45,7 +45,7 @@ class Aika(models.Model):
     aika = models.CharField(max_length=5) 
 
     def __str__(self):
-         return self.aika   
+        return self.aika   
 
 
 
