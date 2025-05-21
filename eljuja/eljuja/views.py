@@ -1,7 +1,7 @@
 #from django.http import HttpResponse
 from django.shortcuts import render
-from artikkelit.models import Artikkeli
-from artikkelit.models import Taloyhtio, Asunto
+from artikkelit.models import Artikkeli, Myynti
+#from artikkelit.models import Taloyhtio, Asunto
 from django.http import HttpResponseForbidden
 from artikkelit.forms import AikaForm
 
@@ -16,8 +16,10 @@ def homepage(request):
 def myynti(request):
     if not request.user.is_authenticated:
         return HttpResponseForbidden("Kirjaudu ensin sisään.")
-    # return HttpResponse('Myynti')
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("Sinulla ei ole oikeuksia käyttää tätä sivua.")
     artikkelit = Artikkeli.objects.all()
+    myynnit = Myynti.objects.all()
 
     aika_form = AikaForm(request.POST or None)
     if request.method == 'POST' and aika_form.is_valid():
@@ -25,11 +27,11 @@ def myynti(request):
 
     return render(request, 'myynti.html', { 'artikkelit': artikkelit, 'aika_form': aika_form})
 
-def taloyhtio(request):
-    taloyhtiot = ["Aatelitie_3", "Aatelitie_5_7", "Aatelisherra", "Aatelisrouva", "Renkipoika", "Piikatytto", "Omakotitalot"]
-    return render (request, 'myynti.html', { 'taloyhtiot', taloyhtiot })
+#def taloyhtio(request):
+#    taloyhtiot = ["Aatelitie_3", "Aatelitie_5_7", "Aatelisherra", "Aatelisrouva", "Renkipoika", "Piikatytto", "Omakotitalot"]
+#    return render (request, 'myynti.html', { 'taloyhtiot', taloyhtiot })
 
-def taloyhtiot(request):
-    taloyhtiot = Taloyhtio.object.all()
-    context = {'taloyhtiot': taloyhtiot}
-    return render(request, 'myynti.html', context)
+#def taloyhtiot(request):
+#    taloyhtiot = Taloyhtio.object.all()
+#    context = {'taloyhtiot': taloyhtiot}
+#    return render(request, 'myynti.html', context)
