@@ -8,19 +8,7 @@ class CreateArtikkeli(forms.ModelForm):
         prefix = 'artikkeli'
         fields = ['artikkeli', 'hinta', 'lisatietoja']
 
-class CreateKpl(CreateArtikkeli):
-    class Meta:
-        model = models.Kpl
-        prefix = 'kpl'
-        fields = ['kpl']
     
-#class CreateAika(CreateArtikkeli):
-#    class Meta:
-#        models = models.Aika
-#        prefix = 'aika'
-#        fields = ['16.30', '17.00', '17.30', '18.00']
-        #fields = (['AIKA1', 'AIKA2', 'AIKA3', 'AIKA4'])
-
 class AikaForm(forms.Form):
     aika_valinta = [
         ('1', '16.30'),
@@ -31,3 +19,7 @@ class AikaForm(forms.Form):
   
     aika = forms.ChoiceField(choices=aika_valinta, widget=forms.RadioSelect)
 
+class MyyntiForm(forms.ModelForm):
+    class Meta:
+        model = models.Myynti
+        fields = ['artikkeli', 'kpl', 'alle_3v', 'taloyhtio', 'asunto', 'maidoton', 'gluteeniton', 'kasvis', 'vegaaninen', 'extra_burger']
