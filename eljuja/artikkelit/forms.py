@@ -25,4 +25,4 @@ class AikaForm(forms.ModelForm):
 class MyyntiForm(forms.ModelForm):
     class Meta:
         model = models.Myynti
-        fields = ['artikkeli', 'kpl', 'alle_3v', 'taloyhtio', 'asunto', 'maidoton', 'gluteeniton', 'kasvis', 'vegaaninen', 'extra_burger']
+        fields = ['artikkeli', 'kpl']
