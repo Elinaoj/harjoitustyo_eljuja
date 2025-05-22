@@ -6,28 +6,19 @@ from django.forms import ModelForm
 # Create your models here.
 
 class Artikkeli(models.Model):
-    #Tähän artikkelityypin valinta (liput, juomat) ja artikkeli_id, jolla voidaan järjestää artikkelit fiksusti
     artikkeli = models.CharField(max_length=75)
     hinta = models.DecimalField(default=0, decimal_places=2, max_digits=4)
     lisatietoja = models.CharField()
 
     def __str__(self):
-            return self.artikkeli, self.hinta
+        return self.artikkeli
     
     class Meta:
         verbose_name_plural = 'Artikkelit'
 
 class Myynti(models.Model):
     artikkeli = models.ForeignKey(Artikkeli, on_delete=models.CASCADE)
-    alle_3v = models.IntegerField()
-    taloyhtio = models.CharField(max_length=100)
-    asunto = models.CharField(max_length=5)
     kpl = models.IntegerField()
-    maidoton = models.IntegerField()
-    gluteeniton = models.IntegerField()
-    kasvis = models.IntegerField()
-    vegaaninen = models.IntegerField()
-    extra_burger = models.IntegerField()
 
     class Meta:
         verbose_name_plural = 'Myynnit'

@@ -13,18 +13,25 @@
 
         <!-- Näytetään radiovalinnat, jotka tulevat forms.ModelFormista -->
         {{ aika_form.aika }}
+        <br>
+        {% for artikkeli in artikkelit %}
+        {{ artikkeli.artikkeli }} {{ artikkeli.hinta }} €  {{ myynti_form.kpl }} <br>
+        {% endfor %}
+
+        
 
         <input type="submit" value="Lähetä">
 
     </form>
-
-
+    <br><br>
+    <p>Myydyt tuotteet:</p>
+    {% for myynti in myynnit %}
+            
+        {{ myynti.artikkeli }}
+    <br>
+    {% endfor %}
 
 </head>
-    <p>Taloyhtiövalinta</p>
-    <p>vuosivalinta uusi koodissa</p>
-    <p>asunto</p>
-    <h1>Artikkelit:</h1>
     <form> 
         <!-- <article>
             <label for="id_aika_0">16.30
@@ -40,7 +47,7 @@
                 <input type="radio" name="aika" value="16.30" required id="id_aika_1">
             </label>
         </article> -->
-        {% for artikkeli in artikkelit %}
+        {% comment %} {% for artikkeli in artikkelit %}
         <article class='artikkeli' >
             <table>
                 <th href="{% url "artikkelit:lista" %}">
@@ -55,5 +62,5 @@
         </article>
     {% endfor%}
     <input type="submit" value="Submit">
-    </form>
+    </form> {% endcomment %}
 {% endblock %}

@@ -22,10 +22,11 @@ def myynti(request):
     myynnit = Myynti.objects.all()
 
     aika_form = AikaForm(request.POST or None)
+    myynti_form = MyyntiForm(request.POST or None)
     if request.method == 'POST' and aika_form.is_valid():
         aika_form.save()
 
-    return render(request, 'myynti.html', { 'artikkelit': artikkelit, 'aika_form': aika_form})
+    return render(request, 'myynti.html', { 'artikkelit': artikkelit, 'aika_form': aika_form, 'myynti_form': myynti_form, 'myynnit': myynnit})
 
 
 #def myynti(request):
