@@ -16,7 +16,7 @@ class Artikkeli(models.Model):
 
 
 class Aika(models.Model):
-    aika = models.CharField(max_length=5, blank=True) 
+    aika = models.CharField(unique=True, max_length=5) 
 
     def __str__(self):
         return self.aika   
