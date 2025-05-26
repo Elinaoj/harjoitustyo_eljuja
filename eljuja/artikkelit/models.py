@@ -3,8 +3,6 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 
 
-# Create your models here.
-
 class Artikkeli(models.Model):
     artikkeli = models.CharField(max_length=75)
     hinta = models.DecimalField(default=0, decimal_places=2, max_digits=4)
@@ -16,21 +14,24 @@ class Artikkeli(models.Model):
     class Meta:
         verbose_name_plural = 'Artikkelit'
 
-class Myynti(models.Model):
-    artikkeli = models.ForeignKey(Artikkeli, on_delete=models.CASCADE)
-    kpl = models.IntegerField()
-
-    class Meta:
-        verbose_name_plural = 'Myynnit'
 
 class Aika(models.Model):
-    aika = models.CharField(max_length=5) 
+    aika = models.CharField(max_length=5, blank=True) 
 
     def __str__(self):
         return self.aika   
 
     class Meta:
         verbose_name_plural = 'Ruoka-ajat'
+
+
+class Myynti(models.Model):
+    artikkeli = models.ForeignKey(Artikkeli, on_delete=models.CASCADE)
+    kpl = models.IntegerField(blank=True)
+    aika = models.ForeignKey(Aika, on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Myynnit'
 
 #class Node(models.Model):
     #artikkeli_id = models.CharField(primary_key=True)
