@@ -11,13 +11,36 @@
     <form method="POST">   <!-- Lomake lähettää dataa -->
         {% csrf_token %}
 
+        <!-- Näytetää radiovalinnat ja niiden viereen yhteenlasketut henkilömäärät kuhunkin ruokailuajankohtaan -->
+        <label>
+            <input type="radio" name="aika" value="16.30" required> 16.30 -- Ilmoittautunut nyt {{ passit_per_aika.16.30 }} henkilöä
+        </label><br>
+
+        <label>
+            <input type="radio" name="aika" value="17.00" required> 17.00 -- Ilmoittautunut nyt {{ passit_per_aika.17.00 }} henkilöä
+        </label><br>
+
+        <label>
+            <input type="radio" name="aika" value="17.30" required> 17.30 -- Ilmoittautunut nyt {{ passit_per_aika.17.30 }} henkilöä
+        </label><br>
+
+        <label>
+            <input type="radio" name="aika" value="18.00" required> 18.00 -- Ilmoittautunut nyt {{ passit_per_aika.18.00 }} henkilöä
+        </label><br>
+
+
         <!-- Näytetään radiovalinnat, jotka tulevat forms.ModelFormista -->
-        {{ aika_form.aika }}
+        <!-- <div>
+        {{ aika_form.aika }} -- {{ passit_per_aika.17.30 }}
+        </div> -->
+        
         <br>
         {% for artikkeli in artikkelit %}
-        {{ artikkeli.artikkeli }} {{ artikkeli.hinta }} €  {{ myynti_form.kpl }} <br>
+        {{ artikkeli.artikkeli }} {{ artikkeli.hinta }} €
+        <input type="number" name="kpl_{{ artikkeli.id }}" min="0" step="1" value="0">
+        <br>
         {% endfor %}
-
+        <br>
         
 
         <input type="submit" value="Lähetä">
