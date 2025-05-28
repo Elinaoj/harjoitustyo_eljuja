@@ -1,5 +1,5 @@
 #from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from artikkelit.models import Artikkeli, Myynti, Aika
 #from artikkelit.models import Taloyhtio, Asunto
 from django.http import HttpResponseForbidden
@@ -28,7 +28,7 @@ def myynti(request):
         aika_form.save()
 
     passit = ['Aikuisten passi', 'Lasten passi', 'Alle 3-v']     # Määritetään mitkä artikkelit on passeja (henkilömäärää varten)
-    ruokailuajat = ['16.30', '17.00', '17.30', '18.00']          # Määritetään ruokailuajat
+    ruokailuajat = ['1630', '1700', '1730', '1800']              # Määritetään ruokailuajat
     passit_per_aika = {}                                         # Tallennetaan passien henkilömäärät sanakirjaan
     for aika in ruokailuajat:
         passit_per_aika[aika] = 0                                # Aluksi 0 myytyä passia
@@ -37,6 +37,7 @@ def myynti(request):
         if myynti.artikkeli.artikkeli in passit and myynti.aika:    # Tarkistetaan onko tietty artikkeli passi ja onko myyntiaika merkitty
             passit_per_aika[myynti.aika.aika] += myynti.kpl         # Lisätään myydyt passit sanakirjan tiettyyn aikaan
 
+    # Tallennetaan myynnit POST-pyynnöstä tietokantaan tietyillä parametreilla
     if request.method == 'POST':
         valittu_aika_str = request.POST.get('aika')
         valittu_aika = Aika.objects.get(aika=valittu_aika_str)
@@ -50,6 +51,7 @@ def myynti(request):
                     kpl=int(kpl_arvo),
                     aika=valittu_aika
                 )
+        return redirect('myynti')                   # Päivitetään myyntisivu heti POST:in jälkeen (URL name = 'myynti')
 
 
     return render(request, 'myynti.html', {
