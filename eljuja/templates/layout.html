@@ -28,7 +28,10 @@
                 <a href="{% url 'artikkelit:uusi-artikkeli' %}">
                     <span role="img" aria-label="Uusi Artikkeli" title="Uusi Artikkeli">Uusi</span>
                 </a> | 
-            {% endif %}
+                <a href="{% url 'excel' %}">
+                    <span role="img" aria-label="Excel" title="Excel">Excel</span>
+                </a>
+                {% endif %}
             <form class="logout" action="{% url 'users:logout' %}" method="post">
                 {% csrf_token %} 
                 <button class="logout-button" aria-label="User Logout" title="User Logout">Kirjaudu ulos</button>
