@@ -62,7 +62,9 @@ def myynti(request):
         'passit_per_aika': passit_per_aika,
         })
 
-
+def excel(request):
+    #return HttpResponse('Pääsivu')
+    return render(request, 'excel.html')
 
         # if myynti.artikkeli.artikkeli in passit:                 # Onko myyty artikkeli passi
         #     if myynti.aika:                                      # Otetaan ruokailuaika jos sellainen on liitetty

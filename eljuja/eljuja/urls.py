@@ -29,6 +29,7 @@ urlpatterns = [
     path('myynti/', views.myynti, name='myynti'),
     path('artikkelit/', include('artikkelit.urls')),
     path('users/', include('users.urls')),
+    path('excel/', views.excel, name='excel'),
 ]
 
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
