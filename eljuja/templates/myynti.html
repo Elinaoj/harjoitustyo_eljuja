@@ -11,7 +11,7 @@
     <form method="POST">   <!-- Lomake lähettää dataa -->
         {% csrf_token %}
 
-        <!-- Näytetää radiovalinnat ja niiden viereen yhteenlasketut henkilömäärät kuhunkin ruokailuajankohtaan -->
+        <!-- Näytetään radiovalinnat ja niiden viereen yhteenlasketut henkilömäärät kuhunkin ruokailuajankohtaan -->
         <label>
             <input type="radio" name="aika" value="1630" required> 16.30   ---    {{ passit_per_aika.1630 }} hlöä
         </label><br>
@@ -42,8 +42,11 @@
         {% endfor %}
         <br>
         
+        <input type="submit" value="Näytä summa" name="nayta_summa"><br>
+        
+        <b>Summa: {{ myyntisumma }} € </b><br><br>
 
-        <input type="submit" value="Lähetä">
+        <input type="submit" value="Tallenna" name="tallenna">
 
     </form>
     <br><br>
