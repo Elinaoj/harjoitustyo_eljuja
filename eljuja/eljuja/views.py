@@ -37,22 +37,51 @@ def myynti(request):
         if myynti.artikkeli.artikkeli in passit and myynti.aika:    # Tarkistetaan onko tietty artikkeli passi ja onko myyntiaika merkitty
             passit_per_aika[myynti.aika.aika] += myynti.kpl         # Lisätään myydyt passit sanakirjan tiettyyn aikaan
 
-    # Tallennetaan myynnit POST-pyynnöstä tietokantaan tietyillä parametreilla
+    myyntisumma = 0
+
+    # POST-pyynnöt myynti-sivulta
     if request.method == 'POST':
         valittu_aika_str = request.POST.get('aika')
         valittu_aika = Aika.objects.get(aika=valittu_aika_str)
-        for artikkeli in Artikkeli.objects.all():
-            kentan_nimi = f'kpl_{artikkeli.id}'
-            kpl_arvo = request.POST.get(kentan_nimi)
 
-            if kpl_arvo and int(kpl_arvo) > 0:
-                Myynti.objects.create(
-                    artikkeli=artikkeli,
-                    kpl=int(kpl_arvo),
-                    aika=valittu_aika
-                )
-        return redirect('myynti')                   # Päivitetään myyntisivu heti POST:in jälkeen (URL name = 'myynti')
+        if 'tallenna' in request.POST:                            # Tallenna -napista painettu, tallennetaan myynti
+            for artikkeli in Artikkeli.objects.all():
+                kentan_nimi = f'kpl_{artikkeli.id}'
+                kpl_arvo = request.POST.get(kentan_nimi)
 
+                if kpl_arvo and int(kpl_arvo) > 0:
+                    Myynti.objects.create(
+                        artikkeli=artikkeli,
+                        kpl=int(kpl_arvo),
+                        aika=valittu_aika
+                    )
+                
+            # myyntisumma += kpl_arvo * artikkeli.hinta
+
+            return redirect('myynti')                           # Päivitetään myyntisivu heti POST:in jälkeen (URL name = 'myynti')
+
+        elif 'nayta_summa' in request.POST:                     # Näytä summa -napista painettu, lasketaan ja näytetään summa
+            for artikkeli in Artikkeli.objects.all():
+                kentan_nimi = f'kpl_{artikkeli.id}'
+                kpl_arvo = request.POST.get(kentan_nimi)
+
+                if kpl_arvo and int(kpl_arvo) > 0:
+                    myyntisumma += int(kpl_arvo) * artikkeli.hinta
+
+    #         aika_form = AikaForm(request.POST)
+
+    # else:
+    #     aika_form = AikaForm()
+
+
+        #     if myynti_form.is_valid():
+        #         myynti_form = myynti_form.cleaned_data.get(myynti_form)
+        #     return render(request, 'myynti.html', {
+        #         'myynti_form': myynti_form,
+        #         'myyntisumma': myyntisumma,
+        #         })
+
+        # print(request.POST)
 
     return render(request, 'myynti.html', {
         'artikkelit': artikkelit,
@@ -60,6 +89,8 @@ def myynti(request):
         'myynti_form': myynti_form,
         'myynnit': myynnit,
         'passit_per_aika': passit_per_aika,
+        'myyntisumma': myyntisumma,
+        # 'valittu_aika': valittu_aika_str,
         })
 
 def excel(request):
