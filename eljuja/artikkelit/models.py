@@ -16,22 +16,13 @@ class Artikkeli(models.Model):
 
 
 class Aika(models.Model):
-    aika = models.CharField(unique=True, max_length=5, blank=False) 
+    aika = models.CharField(max_length=5) 
 
     def __str__(self):
         return self.aika   
 
     class Meta:
         verbose_name_plural = 'Ruoka-ajat'
-
-
-class Myynti(models.Model):
-    artikkeli = models.ForeignKey(Artikkeli, on_delete=models.CASCADE)
-    kpl = models.IntegerField(blank=True)
-    aika = models.ForeignKey(Aika, on_delete=models.CASCADE, null=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = 'Myynnit'
 
 #class Node(models.Model):
     #artikkeli_id = models.CharField(primary_key=True)
