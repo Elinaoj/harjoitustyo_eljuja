@@ -10,7 +10,6 @@
 
     <form method="POST">   <!-- Lomake lähettää dataa -->
         {% csrf_token %}
-
         <!-- Näytetään radiovalinnat ja niiden viereen yhteenlasketut henkilömäärät kuhunkin ruokailuajankohtaan -->
         <label>
             <input type="radio" name="aika" value="1630" required> 16.30   ---    {{ passit_per_aika.1630 }} hlöä
@@ -36,7 +35,7 @@
         
         <br>
         {% for artikkeli in artikkelit %}
-        {{ artikkeli.artikkeli }} {{ artikkeli.hinta }} €
+        {{ artikkeli.artikkeli }} {{ artikkeli.hinta }} € 
         <input type="number" name="kpl_{{ artikkeli.id }}" min="0" step="1" value="0">
         <br>
         {% endfor %}
