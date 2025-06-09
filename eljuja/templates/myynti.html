@@ -6,11 +6,63 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Valitse ruokailuaika</h2>
 
-    <form method="POST">   <!-- Lomake lähettää dataa -->
+    <head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            $('#taloyhtio').change(function() {
+                var taloyhtio = $(this).val();
+
+                //Tyhjennä ja estä asunto alasvetovalikko
+                $('#asunto').empty().prop('disabled', true);
+                $('#asunto').append('<option value="">-- Valitse asunto --</option>');
+                if (taloyhtio) {
+                    // tee AJAX pyyntö asuntojen hakemiseen 
+                    $.ajax({
+                        url: `/get_asunnot/${taloyhtio}/`,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            var asunnot = data.asunnot;
+                            var asuntoDropdown = $('#asunto');
+
+                            // Salli asuntovalinta
+                            asuntoDropdown.prop('disabled', false);
+
+                            // Täytä valinta haetulla datalla
+                            $.each(asunnot, function(index, asunto) {
+                                asuntoDropdown.append('<option value="' + asunto.id + '">' + asunto.nimi + '</option>');
+                            });
+                        },
+                        error: function(error) {
+                            console.log('Error fetching asuunot:', error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    </head>
+    <!-- Lomake lähettää dataa -->
+    <form method="POST">  
         {% csrf_token %}
-
+    <!-- Näytetään taloyhtiö- ja asuntoalinta alasetovalikot -->
+    <label for="taloyhtio"></label>
+    <select id="taloyhtio">
+        <option value="">-- Taloyhtio --</option>
+        {% for taloyhtio in taloyhtiot %}
+            <option value="{{ taloyhtio.id }}">{{ taloyhtio.nimi }}</option>
+        {% endfor %}
+    </select>
+    
+    <label for="asunto"></label>
+    <select id="asunto" disabled>
+        <option value="" >-- Asunto --</option>
+    </select>
+        <br><br>
+        <h2>Valitse ruokailuaika</h2>
         <!-- Näytetään radiovalinnat ja niiden viereen yhteenlasketut henkilömäärät kuhunkin ruokailuajankohtaan -->
         <label>
             <input type="radio" name="aika" value="1630" required> 16.30   ---    {{ passit_per_aika.1630 }} hlöä
@@ -28,7 +80,6 @@
             <input type="radio" name="aika" value="1800" required> 18.00  ---  {{ passit_per_aika.1800 }} hlöä
         </label><br>
 
-
         <!-- Näytetään radiovalinnat, jotka tulevat forms.ModelFormista -->
         <!-- <div>
         {{ aika_form.aika }} -- {{ passit_per_aika.17.30 }}
@@ -36,57 +87,24 @@
         
         <br>
         {% for artikkeli in artikkelit %}
-        {{ artikkeli.artikkeli }} {{ artikkeli.hinta }} €
+        {{ artikkeli.artikkeli }} {{ artikkeli.hinta }}€ 
         <input type="number" name="kpl_{{ artikkeli.id }}" min="0" step="1" value="0">
         <br>
         {% endfor %}
         <br>
         
-        <input type="submit" value="Näytä summa" name="nayta_summa"><br>
+        <input type="submit" value="Näytä summa" name="nayta_summa">
         
         <b>Summa: {{ myyntisumma }} € </b><br><br>
 
         <input type="submit" value="Tallenna" name="tallenna">
 
     </form>
-    <br><br>
-    <p>Myydyt tuotteet:</p>
-    {% for myynti in myynnit %}
-            
-        {{ myynti.artikkeli }}
     <br>
+    <h2>Myydyt tuotteet:</h2>
+    <!-- Tulostetaan myydyt tuotteet -->
+    {% for artikkeli, kpl in kokonaismyynti.items %}
+        {{ artikkeli }}:  {{ kpl }}
+            <br>
     {% endfor %}
-
-</head>
-    <form> 
-        <!-- <article>
-            <label for="id_aika_0">16.30
-                <input type="radio" name="aika" value="16.00" required id="id_aika_0">
-            </label>
-            <label for="id_aika_1">17.00
-                <input type="radio" name="aika" value="16.30" required id="id_aika_1">
-            </label>
-            <label for="id_aika_0">17.30
-                <input type="radio" name="aika" value="16.00" required id="id_aika_0">
-            </label>
-            <label for="id_aika_1">18.00
-                <input type="radio" name="aika" value="16.30" required id="id_aika_1">
-            </label>
-        </article> -->
-        {% comment %} {% for artikkeli in artikkelit %}
-        <article class='artikkeli' >
-            <table>
-                <th href="{% url "artikkelit:lista" %}">
-                    {{ artikkeli.artikkeli }} 
-                </th>
-                <td>{{ artikkeli.hinta }} € </td>
-                <td>
-                    <label for="kpl"> Kpl:</label>
-                    <input type="number" id="kpl" name="Kpl" step="1">
-                </td>
-            </table>
-        </article>
-    {% endfor%}
-    <input type="submit" value="Submit">
-    </form> {% endcomment %}
 {% endblock %}
