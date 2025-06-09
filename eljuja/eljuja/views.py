@@ -1,7 +1,6 @@
 #from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from artikkelit.models import Artikkeli, Myynti, Aika, Taloyhtio, Asunto
-#from artikkelit.models import Taloyhtio, Asunto
 from django.http import HttpResponseForbidden, JsonResponse
 from artikkelit.forms import AikaForm, MyyntiForm, AsuntoForm
 from django.db import connection
@@ -45,22 +44,7 @@ def myynti(request):
     asunto_form = AsuntoForm(request.POST or None)
 
     if request.method == 'POST' and asunto_form.is_valid():
-        print('a_valid: ', asunto_form.is_valid(), )
-        #r = Fleet(asunto_id=asunto_selected[0].id, description=cdata('description'))
-        adata = asunto_form.cleaned_data.get
-        print('adata: ', adata)
-        asunto_form.save()
-
-
-        t = request.GET.get('taloyhtio')
-        a = request.GET.get('nimi')
-        tp = request.POST.get('taloyhtio')
-        ap = request.POST.get('nimi')
-        print('t: ', t, a, tp, ap)
-        asunto_form.save()
-        print('get: ', request.GET)
-        print('post: ', request.POST)
-        #return (request, 'myynti.html', {'asunto_form': asunto_form})
+       pass
 
     if request.method == 'POST' and aika_form.is_valid():
         aika_form.save()

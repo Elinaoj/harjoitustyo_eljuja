@@ -23,7 +23,6 @@ class AikaForm(forms.ModelForm):
             ])
         }
 
-
 class MyyntiForm(forms.ModelForm):
     class Meta:
         model = models.Myynti

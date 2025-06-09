@@ -6,11 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <!-- Lomake lähettää dataa -->
-    <form method="POST">  
-        {% csrf_token %}
 
-    <!-- Taloyhtion ja asunnon valinta -->
     <head>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     
@@ -60,12 +56,12 @@
             <option value="{{ taloyhtio.id }}">{{ taloyhtio.nimi }}</option>
         {% endfor %}
     </select>
-    <br>
+    
     <label for="asunto"></label>
     <select id="asunto" disabled>
         <option value="" >-- Asunto --</option>
     </select>
-
+        <br><br>
         <h2>Valitse ruokailuaika</h2>
         <!-- Näytetään radiovalinnat ja niiden viereen yhteenlasketut henkilömäärät kuhunkin ruokailuajankohtaan -->
         <label>
@@ -97,15 +93,15 @@
         {% endfor %}
         <br>
         
-        <input type="submit" value="Näytä summa" name="nayta_summa"><br>
+        <input type="submit" value="Näytä summa" name="nayta_summa">
         
         <b>Summa: {{ myyntisumma }} € </b><br><br>
 
         <input type="submit" value="Tallenna" name="tallenna">
 
     </form>
-    <br><br>
-    <p>Myydyt tuotteet:</p>
+    <br>
+    <h2>Myydyt tuotteet:</h2>
     <!-- Tulostetaan myydyt tuotteet -->
     {% for artikkeli, kpl in kokonaismyynti.items %}
         {{ artikkeli }}:  {{ kpl }}
