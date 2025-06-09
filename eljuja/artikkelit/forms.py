@@ -28,3 +28,8 @@ class MyyntiForm(forms.ModelForm):
     class Meta:
         model = models.Myynti
         fields = ['artikkeli', 'kpl', 'aika', 'taloyhtio', 'asunto']
+
+class AsuntoForm(forms.ModelForm):
+    class Meta:
+        model = models.Asunto
+        fields = ['nimi', 'taloyhtio']
