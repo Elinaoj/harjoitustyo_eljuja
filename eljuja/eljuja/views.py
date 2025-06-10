@@ -111,7 +111,7 @@ def myynti(request):
         'myyntisumma': myyntisumma,
         'taloyhtiot': taloyhtiot,
         'asunnot': asunnot,
-        'kokonaismyynti': kokonaismyynti
+        'kokonaismyynti': kokonaismyynti,
         'kpl_arvot': kpl_arvot,
         })
 
