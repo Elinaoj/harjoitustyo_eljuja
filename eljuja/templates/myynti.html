@@ -43,11 +43,12 @@
                 }
             });
         });
-    </script>
+        </script>
     </head>
     <!-- Lomake lähettää dataa -->
     <form method="POST">  
         {% csrf_token %}
+
     <!-- Näytetään taloyhtiö- ja asuntoalinta alasetovalikot -->
     <label for="taloyhtio"></label>
     <select id="taloyhtio">

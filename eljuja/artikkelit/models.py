@@ -46,7 +46,7 @@ class Asunto(models.Model):
 
 class Myynti(models.Model):
     artikkeli = models.ForeignKey(Artikkeli, on_delete=models.CASCADE)
-    kpl = models.IntegerField(blank=True)
+    kpl = models.IntegerField(blank=True, max_length=5)
     aika = models.ForeignKey(Aika, on_delete=models.CASCADE, null=True, blank=True)
     taloyhtio = models.ForeignKey(Taloyhtio, on_delete=models.CASCADE, null=True, blank=True)
     asunto = models.ForeignKey(Asunto, on_delete=models.CASCADE, null=True, blank=True)

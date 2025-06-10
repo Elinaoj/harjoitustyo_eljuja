@@ -43,11 +43,23 @@ def myynti(request):
     myynti_form = MyyntiForm(request.POST or None)
     asunto_form = AsuntoForm(request.POST or None)
 
+    print('get0: ', request.GET.get('asunto'))
+    print('post0: ', request.POST. get('asunto'))
+
+    print('*', 'request.method', request.method)
+    print('*', 'request.POST', request.POST)
+    print(request.method)
+
+    if request.method == 'POST':
+        asunto=request.POST.get('asunto')
+
+    
+
     if request.method == 'POST' and asunto_form.is_valid():
-       pass
+        pass
 
     if request.method == 'POST' and aika_form.is_valid():
-        aika_form.save()
+        pass
 
 
     # Määritetään mitkä artikkelit on passeja (henkilömäärää varten)
@@ -74,7 +86,7 @@ def myynti(request):
         valittu_aika = Aika.objects.get(aika=valittu_aika_str)
         
         # Tallenna -napista painettu, tallennetaan myynti
-        if 'tallenna' in request.POST:                            
+        if 'tallenna' in request.POST:                     
             for artikkeli in Artikkeli.objects.all():
                 kentan_nimi = f'kpl_{artikkeli.id}'
                 kpl_arvo = request.POST.get(kentan_nimi)
