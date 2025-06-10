@@ -67,14 +67,15 @@ def myynti(request):
             passit_per_aika[myynti.aika.aika] += myynti.kpl         
 
     myyntisumma = 0
+    aika_form = AikaForm(request.POST or None)
+    kpl_arvot = {}                                 # sanakirja säilyttämään kpl_arvot kentissä kun "Näytä summa" -nappia painetaan
 
     # POST-pyynnöt myynti-sivulta
     if request.method == 'POST':
-        valittu_aika_str = request.POST.get('aika')
-        valittu_aika = Aika.objects.get(aika=valittu_aika_str)
+        if 'tallenna' in request.POST and aika_form.is_valid():          # "Tallenna" -napista painettu, tallennetaan myynti
+            valittu_aika = aika_form.cleaned_data['aika']                # käytetään aika_formista vain valittua arvoa
         
         # Tallenna -napista painettu, tallennetaan myynti
-        if 'tallenna' in request.POST:                            
             for artikkeli in Artikkeli.objects.all():
                 kentan_nimi = f'kpl_{artikkeli.id}'
                 kpl_arvo = request.POST.get(kentan_nimi)
@@ -84,22 +85,22 @@ def myynti(request):
                     Myynti.objects.create(
                         artikkeli=artikkeli,
                         kpl=int(kpl_arvo),
-                        aika=valittu_aika
+                        aika=valittu_aika           # käytetään olemassa olevaa Aika-instanssia
                     )
-                    
-            
             # Päivitetään myyntisivu heti POST:in jälkeen (URL name = 'myynti')
             return redirect('myynti')                           
         # Näytä summa -napista painettu, lasketaan ja näytetään summa
         elif 'nayta_summa' in request.POST:                     
             for artikkeli in Artikkeli.objects.all():
                 kentan_nimi = f'kpl_{artikkeli.id}'
-                kpl_arvo = request.POST.get(kentan_nimi)
+                kpl_arvo = request.POST.get(kentan_nimi, '0')   # säilytetään kentissä kpl_arvot
+                kpl_arvot[artikkeli.id] = kpl_arvo
 
                 if kpl_arvo and int(kpl_arvo) > 0:
                     myyntisumma += int(kpl_arvo) * artikkeli.hinta
+    else:
+        aika_form = AikaForm()
 
-    
     return render(request, 'myynti.html', {
         'artikkelit': artikkelit,
         'aika_form': aika_form,
@@ -111,17 +112,9 @@ def myynti(request):
         'taloyhtiot': taloyhtiot,
         'asunnot': asunnot,
         'kokonaismyynti': kokonaismyynti
-        # 'valittu_aika': valittu_aika_str,
+        'kpl_arvot': kpl_arvot,
         })
 
 def excel(request):
     #return HttpResponse('Pääsivu')
     return render(request, 'excel.html')
-
-        # if myynti.artikkeli.artikkeli in passit:                 # Onko myyty artikkeli passi
-        #     if myynti.aika:                                      # Otetaan ruokailuaika jos sellainen on liitetty
-        #         ruoka_aika = myynti.aika.aika
-        #         if ruoka_aika not in passit_per_aika:            # Jos artikkeli ei ole sanakirjassa, aloitetaan nollasta
-        #             passit_per_aika[ruoka_aika] = 0
-        #         passit_per_aika[ruoka_aika] += myynti.kpl        # Lisätään aikaan myynnin henkilömäärä
-

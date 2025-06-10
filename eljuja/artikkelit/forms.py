@@ -1,6 +1,7 @@
 from django import forms
 from . import models
 from django.forms import ModelForm
+from .models import Aika
 
 class CreateArtikkeli(forms.ModelForm):
     class Meta:
@@ -8,20 +9,12 @@ class CreateArtikkeli(forms.ModelForm):
         prefix = 'artikkeli'
         fields = ['artikkeli', 'hinta', 'lisatietoja']
 
-    # aika = forms.ChoiceField(choices=aika_valinta, widget=forms.RadioSelect)
-
-class AikaForm(forms.ModelForm):
-    class Meta:
-        model = models.Aika
-        fields = ['aika']
-        widgets = {
-            'aika': forms.RadioSelect(choices=[
-                ('16.30', '16.30'),
-                ('17.00', '17.00'),
-                ('17.30', '17.30'),
-                ('18.00', '18.00'),
-            ])
-        }
+class AikaForm(forms.Form):
+    aika = forms.ModelChoiceField(
+        queryset=Aika.objects.all(),
+        widget=forms.RadioSelect,
+        empty_label=None,
+        )
 
 class MyyntiForm(forms.ModelForm):
     class Meta:
