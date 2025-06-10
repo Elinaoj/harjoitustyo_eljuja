@@ -1,5 +1,6 @@
 
 {% extends 'layout.html'%}
+{% load get_item %}
 
 {% block title %}
     Myynti
@@ -11,33 +12,38 @@
     <form method="POST">   <!-- Lomake lähettää dataa -->
         {% csrf_token %}
 
+        <!-- Ilmoitus jos ruoka-aikaa ei täytetty -->
+        {% if aika_form.errors %}
+            <div style="color: rgb(255, 217, 0);">
+                {{ aika_form.errors.aika.0 }}
+            </div>
+        {% endif %}
+
         <!-- Näytetään radiovalinnat ja niiden viereen yhteenlasketut henkilömäärät kuhunkin ruokailuajankohtaan -->
         <label>
-            <input type="radio" name="aika" value="1630" required> 16.30   ---    {{ passit_per_aika.1630 }} hlöä
+            <input type="radio" name="aika" value="1" {% if aika_form.data.aika == '1' %}checked{% endif %}> 16.30   ---    {{ passit_per_aika.1630 }} hlöä
+
+        </label><br>
+
+        <label> 
+            <input type="radio" name="aika" value="2" {% if aika_form.data.aika == '2' %}checked{% endif %}> 17.00   ---    {{ passit_per_aika.1700 }} hlöä
         </label><br>
 
         <label>
-            <input type="radio" name="aika" value="1700" required> 17.00   ---    {{ passit_per_aika.1700 }} hlöä
+            <input type="radio" name="aika" value="3" {% if aika_form.data.aika == '3' %}checked{% endif %}> 17.30   ---    {{ passit_per_aika.1730 }} hlöä
         </label><br>
 
         <label>
-            <input type="radio" name="aika" value="1730" required> 17.30   ---   {{ passit_per_aika.1730 }} hlöä
+            <input type="radio" name="aika" value="4" {% if aika_form.data.aika == '4' %}checked{% endif %}> 18.00   ---    {{ passit_per_aika.1800 }} hlöä
         </label><br>
 
-        <label>
-            <input type="radio" name="aika" value="1800" required> 18.00  ---  {{ passit_per_aika.1800 }} hlöä
-        </label><br>
-
-
-        <!-- Näytetään radiovalinnat, jotka tulevat forms.ModelFormista -->
-        <!-- <div>
-        {{ aika_form.aika }} -- {{ passit_per_aika.17.30 }}
-        </div> -->
-        
         <br>
+        <!-- Täytetään kpl-valinnat jos Näytä summa -painiketta painettu -->
         {% for artikkeli in artikkelit %}
         {{ artikkeli.artikkeli }} {{ artikkeli.hinta }} €
-        <input type="number" name="kpl_{{ artikkeli.id }}" min="0" step="1" value="0">
+        <input type="number" name="kpl_{{ artikkeli.id }}" min="0" step="1" value="{{ kpl_arvot|get_item:artikkeli.id|default:'0' }}">
+
+
         <br>
         {% endfor %}
         <br>
@@ -59,20 +65,6 @@
 
 </head>
     <form> 
-        <!-- <article>
-            <label for="id_aika_0">16.30
-                <input type="radio" name="aika" value="16.00" required id="id_aika_0">
-            </label>
-            <label for="id_aika_1">17.00
-                <input type="radio" name="aika" value="16.30" required id="id_aika_1">
-            </label>
-            <label for="id_aika_0">17.30
-                <input type="radio" name="aika" value="16.00" required id="id_aika_0">
-            </label>
-            <label for="id_aika_1">18.00
-                <input type="radio" name="aika" value="16.30" required id="id_aika_1">
-            </label>
-        </article> -->
         {% comment %} {% for artikkeli in artikkelit %}
         <article class='artikkeli' >
             <table>
