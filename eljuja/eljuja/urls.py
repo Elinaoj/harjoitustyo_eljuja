@@ -29,6 +29,10 @@ urlpatterns = [
     path('myynti/', views.myynti, name='myynti'),
     path('artikkelit/', include('artikkelit.urls')),
     path('users/', include('users.urls')),
+    path('excel/', views.excel, name='excel'),
+    path('get_asunnot/<int:taloyhtio_id>/', views.get_asunnot, name='get_asunnot'),
+    #path('get-asunto-ajax/', views.get_asunto_ajax, name='get_asunto_ajax'),
+    #path('taloyhtio/', views.taloyhtiovalintaField, name='taloyhtio'),
 ]
 
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
