@@ -5,25 +5,7 @@ from . import forms
 import pandas as pd
 from django.http import HttpResponse
 from .models import Myynti
-# Create your views here.
 
-
-def artikkelit_lista(request):
-    if not request.user.is_authenticated:
-        return HttpResponseForbidden("Kirjaudu ensin sisään.")
-    if not request.user.is_superuser:
-        return HttpResponseForbidden("Sinulla ei ole oikeuksia käyttää tätä sivua.")
-    artikkelit = Artikkeli.objects.all()
-    return render(request, 'artikkelit/artikkelit_lista.html', {'artikkelit': artikkelit})
-
-
-def artikkeli_page(request):
-    artikkelit = Artikkeli.objects.all()
-    return render(request, 'artikkelit/artikkeli_sivu.html', {'artikkelit': artikkelit})
-
-# def artikkeli_uusi(request):     
-#     artikkelit = Artikkeli.objects.all()
-#     return render (request, 'artikkelit/artikkeli_uusi.html', { 'artikkelit': artikkelit })
 
 def artikkeli_uusi(request):
     if not request.user.is_authenticated:

@@ -64,12 +64,14 @@
     </select>
         <br><br>
         <h2>Valitse ruokailuaika</h2>
+
         <!-- Ilmoitus jos ruoka-aikaa ei täytetty -->
         {% if aika_form.errors %}
             <div style="color: rgb(255, 217, 0);">
                 {{ aika_form.errors.aika.0 }}
             </div>
         {% endif %}
+
         <!-- Näytetään radiovalinnat ja niiden viereen yhteenlasketut henkilömäärät kuhunkin ruokailuajankohtaan -->
         <label>
             <input type="radio" name="aika" value="1" {% if aika_form.data.aika == '1' %}checked{% endif %}> 16.30   ---    {{ passit_per_aika.1630 }} hlöä
@@ -88,12 +90,10 @@
         </label><br>
 
         <br>
-        <!-- Täytetään kpl-valinnat jos Näytä summa -painiketta painettu -->
+        <!-- Täytetään kpl-valintakentät uudelleen (ei tyhjennystä) jos Näytä summa -painiketta painettu -->
         {% for artikkeli in artikkelit %}
         {{ artikkeli.artikkeli }} {{ artikkeli.hinta }} €
         <input type="number" name="kpl_{{ artikkeli.id }}" min="0" step="1" value="{{ kpl_arvot|get_item:artikkeli.id|default:'0' }}">
-
-
         <br>
         {% endfor %}
         <br>

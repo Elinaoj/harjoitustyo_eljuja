@@ -22,9 +22,6 @@
                 <span role="img" aria-label="Myynti" title="Myynti">Myynti</span>
             </a> | 
             {% if request.user.is_superuser %}
-                <a href="{% url 'artikkelit:lista' %}">
-                    <span role="img" aria-label="Artikkelit" title="Artikkelit">Artikkelit</span>
-                </a> | 
                 <a href="{% url 'artikkelit:uusi-artikkeli' %}">
                     <span role="img" aria-label="Uusi Artikkeli" title="Uusi Artikkeli">Uusi</span>
                 </a> | 
