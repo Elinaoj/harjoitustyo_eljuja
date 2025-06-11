@@ -2,7 +2,8 @@
 from django.shortcuts import render, redirect
 from artikkelit.models import Artikkeli, Myynti, Aika, Taloyhtio, Asunto
 from django.http import HttpResponseForbidden, JsonResponse
-from artikkelit.forms import AikaForm, MyyntiForm, AsuntoForm
+from artikkelit.forms import AikaForm, AsuntoForm
+# from artikkelit.forms import AikaForm, MyyntiForm, AsuntoForm
 from django.db import connection
 
 def homepage(request):
@@ -40,7 +41,7 @@ def myynti(request):
 
     # Eri lomakkeiden lähetys ja tallennus
     aika_form = AikaForm(request.POST or None)
-    myynti_form = MyyntiForm(request.POST or None)
+    # myynti_form = MyyntiForm(request.POST or None)
     asunto_form = AsuntoForm(request.POST or None)
 
     # Määritetään mitkä artikkelit on passeja (henkilömäärää varten)
@@ -58,7 +59,6 @@ def myynti(request):
         if myynti.artikkeli.artikkeli in passit and myynti.aika:
             # Lisätään myydyt passit sanakirjan tiettyyn aikaan    
             passit_per_aika[myynti.aika.aika] += myynti.kpl         
-
     myyntisumma = 0
     aika_form = AikaForm(request.POST or None)
     kpl_arvot = {}                                 # sanakirja säilyttämään kpl_arvot kentissä kun "Näytä summa" -nappia painetaan
@@ -92,11 +92,10 @@ def myynti(request):
                     myyntisumma += int(kpl_arvo) * artikkeli.hinta
     else:
         aika_form = AikaForm()
-
     return render(request, 'myynti.html', {
         'artikkelit': artikkelit,
         'aika_form': aika_form,
-        'myynti_form': myynti_form,
+        # 'myynti_form': myynti_form,
         'asunto_form': asunto_form,
         'myynnit': myynnit,
         'passit_per_aika': passit_per_aika,
