@@ -1,10 +1,9 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
 
 app_name = 'artikkelit'
 
 urlpatterns = [
-    path('', views.artikkelit_lista, name='lista'),
     path('uusi-artikkeli/', views.artikkeli_uusi, name="uusi-artikkeli"),
     path('export-myynti/', views.export_myynnit_to_excel, name='export_myynnit'),
 ]

@@ -7,8 +7,6 @@
 {% block content %}
     <section>
         <h1>Uusi Artikkeli</h1>
-        <p>id, jotta voi järjestää fiksusti myyntisivulle, myös lisätietokentän mukaan järjestys</p>
-        <p>vuosivalinta, miten olisi fiksuin tehdä? tarvitaanko?</p>
         <form class="form-with-validation" action="{% url 'artikkelit:uusi-artikkeli' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %} 
             {{ form }}
