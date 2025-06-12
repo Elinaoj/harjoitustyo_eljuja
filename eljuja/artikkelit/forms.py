@@ -1,6 +1,5 @@
 from django import forms
 from . import models
-from django.forms import ModelForm
 from .models import Aika
 
 class CreateArtikkeli(forms.ModelForm):

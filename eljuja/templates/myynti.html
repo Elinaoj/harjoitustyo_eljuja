@@ -51,15 +51,16 @@
         {% csrf_token %}
     <!-- Näytetään taloyhtiö- ja asuntoalinta alasetovalikot -->
     <label for="taloyhtio"></label>
-    <select id="taloyhtio">
-        <option value="">-- Taloyhtio --</option>
+    <select name='taloyhtio' id="taloyhtio" required>
+        <option value=>-- Taloyhtio --</option>
         {% for taloyhtio in taloyhtiot %}
             <option value="{{ taloyhtio.id }}">{{ taloyhtio.nimi }}</option>
         {% endfor %}
     </select>
+    <!-- <input value= name="taloyhtio"> -->
     
     <label for="asunto"></label>
-    <select id="asunto" disabled>
+    <select name='asunto' id="asunto" disabled required>
         <option value="" >-- Asunto --</option>
     </select>
         <br><br>
