@@ -14,6 +14,7 @@ class AikaForm(forms.Form):
         widget=forms.RadioSelect,
         empty_label=None,
         )
+
 class AsuntoForm(forms.ModelForm):
     class Meta:
         model = models.Asunto

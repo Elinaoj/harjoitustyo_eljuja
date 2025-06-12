@@ -1,4 +1,3 @@
-#from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from artikkelit.models import Artikkeli, Myynti, Taloyhtio, Asunto
 from django.http import HttpResponseForbidden, JsonResponse
@@ -49,6 +48,7 @@ def myynti(request):
     
     # Tallennetaan passien henkilömäärät sanakirjaan
     passit_per_aika = {}                                         
+
     for aika in ruokailuajat:
         # Aluksi 0 myytyä passia
         passit_per_aika[aika] = 0                                
@@ -75,11 +75,11 @@ def myynti(request):
         valittu_taloyhtio = Taloyhtio.objects.get(id=taloyhtio_id) if taloyhtio_id else None
         valittu_asunto = Asunto.objects.get(id=asunto_id) if asunto_id else None
 
-        # "Tallenna" -napista painettu, tallennetaan myynti
-        if 'tallenna' in request.POST and aika_form.is_valid(): 
-            valittu_aika = aika_form.cleaned_data['aika']         
-            
-            # Tallenna napista painettu, tallenetaan myynti
+        # Tallenna -napista painettu, tallennetaan myynti
+        if 'tallenna' in request.POST and aika_form.is_valid():
+            # käytetään aika_formista vain valittua arvoa
+            valittu_aika = aika_form.cleaned_data['aika']
+        
             for artikkeli in Artikkeli.objects.all():
                 kentan_nimi = f'kpl_{artikkeli.id}'
                 kpl_arvo = request.POST.get(kentan_nimi)
@@ -97,18 +97,18 @@ def myynti(request):
             return redirect('myynti')                           
         
         # Näytä summa -napista painettu, lasketaan ja näytetään summa
-        elif 'nayta_summa' in request.POST:                     
+        elif 'nayta_summa' in request.POST: 
+            # säilytetään kentissä kpl_arvot                    
             for artikkeli in Artikkeli.objects.all():
-                # säilytetään kentissä kpl_arvot
                 kentan_nimi = f'kpl_{artikkeli.id}'
-                kpl_arvo = request.POST.get(kentan_nimi, '0')   
+                kpl_arvo = request.POST.get(kentan_nimi, '0')
                 kpl_arvot[artikkeli.id] = kpl_arvo
 
                 if kpl_arvo and int(kpl_arvo) > 0:
                     myyntisumma += int(kpl_arvo) * artikkeli.hinta
     else:
         aika_form = AikaForm()
-    
+
     return render(request, 'myynti.html', {
         'artikkelit': artikkelit,
         'aika_form': aika_form,
@@ -122,5 +122,4 @@ def myynti(request):
         })
 
 def excel(request):
-
     return render(request, 'excel.html')

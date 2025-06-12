@@ -10,6 +10,7 @@
         <form class="form-with-validation" action="{% url 'artikkelit:uusi-artikkeli' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %} 
             {{ form }}
+            <br>
             <button class="form-submit">Lisää artikkeli</button>
         </form>
     </section>
