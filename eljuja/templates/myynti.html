@@ -45,6 +45,7 @@
             });
         });
     </script>
+    
     </head>
     <!-- Lomake lähettää dataa -->
     <form method="POST">  
@@ -75,30 +76,33 @@
 
         <!-- Näytetään radiovalinnat ja niiden viereen yhteenlasketut henkilömäärät kuhunkin ruokailuajankohtaan -->
         <label>
-            <input type="radio" name="aika" value="1" {% if aika_form.data.aika == '1' %}checked{% endif %}> 16.30   ---    {{ passit_per_aika.1630 }} hlöä
+            <input type="radio" name="aika" value="1" {% if aika_form.data.aika == '1' %}checked{% endif %}> 16.30   ---    {{ passit_per_aika.1630 }}  / 50 hlöä
         </label><br>
 
         <label> 
-            <input type="radio" name="aika" value="2" {% if aika_form.data.aika == '2' %}checked{% endif %}> 17.00   ---    {{ passit_per_aika.1700 }} hlöä
+            <input type="radio" name="aika" value="2" {% if aika_form.data.aika == '2' %}checked{% endif %}> 17.00   ---    {{ passit_per_aika.1700 }}  / 50 hlöä
         </label><br>
 
         <label>
-            <input type="radio" name="aika" value="3" {% if aika_form.data.aika == '3' %}checked{% endif %}> 17.30   ---    {{ passit_per_aika.1730 }} hlöä
+            <input type="radio" name="aika" value="3" {% if aika_form.data.aika == '3' %}checked{% endif %}> 17.30   ---    {{ passit_per_aika.1730 }}  / 50 hlöä 
         </label><br>
 
         <label>
-            <input type="radio" name="aika" value="4" {% if aika_form.data.aika == '4' %}checked{% endif %}> 18.00   ---    {{ passit_per_aika.1800 }} hlöä
+            <input type="radio" name="aika" value="4" {% if aika_form.data.aika == '4' %}checked{% endif %}> 18.00   ---    {{ passit_per_aika.1800 }}  / 50 hlöä
         </label><br>
 
         <br>
         <!-- Täytetään kpl-valintakentät uudelleen (ei tyhjennystä) jos Näytä summa -painiketta painettu -->
         {% for artikkeli in artikkelit %}
+            
         {{ artikkeli.artikkeli }} {{ artikkeli.hinta }} €
         <input type="number" name="kpl_{{ artikkeli.id }}" min="0" step="1" value="{{ kpl_arvot|get_item:artikkeli.id|default:'0' }}">
         <br>
         {% endfor %}
         <br>
-        
+        <label for="kateismyynti">Käteismyynti</label>
+        <input type="checkbox" name="kateismyynti" id="kateismyynti" >
+        <br><br>
         <input type="submit" value="Näytä summa" name="nayta_summa">
         
         <b>Summa: {{ myyntisumma }} € </b><br><br>

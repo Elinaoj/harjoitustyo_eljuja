@@ -17,8 +17,17 @@ def kokonaismyynti_sql(self):
     # Haetaan tietokannasta myydyn artikkelin kpl määrä ja palautetaan pelkkä lukumäärä
     with connection.cursor() as cursor:
         cursor.execute('SELECT SUM(kpl) FROM artikkelit_myynti WHERE artikkeli_id == %s', [self])
-        row = cursor.fetchone()
-        return row[0]
+        rivi = cursor.fetchone()
+        return rivi[0]
+
+def kokonaismyynti_asunto_sql(self, taloyhtio_id, asunto_id):
+    # Haetaan tietokannasta tietyn taloyhtion ja asunnon myydyn artikkelin kpl määrä ja palautetaan pelkkä lukumäärä
+    with connection.cursor() as cursor:
+        #print(self, taloyhtio_id, asunto_id)
+        cursor.execute('SELECT SUM(kpl) FROM artikkelit_myynti WHERE artikkeli_id == %s AND taloyhtio_id == %s AND asunto_id == %s ', [self, taloyhtio_id, asunto_id])
+        rivi = cursor.fetchone()
+        #print(rivi)
+        return rivi[0]
 
 def myynti(request):
     # Tarkistetaan kirjautuminen
@@ -40,6 +49,7 @@ def myynti(request):
             kmyynti = 0
         kokonaismyynti[a] = kmyynti
 
+
     # Määritetään mitkä artikkelit on passeja (henkilömäärää varten)
     passit = ['Passi', 'Lasten passi', 'Alle 3-v']     
     
@@ -52,9 +62,9 @@ def myynti(request):
     for aika in ruokailuajat:
         # Aluksi 0 myytyä passia
         passit_per_aika[aika] = 0                                
-    
+
     # Käydään kaikki myyntitapahtumat läpi
-    for myynti in myynnit:                                          
+    for myynti in myynnit: 
         # Tarkistetaan onko tietty artikkeli passi ja onko myyntiaika merkitty
         if myynti.artikkeli.artikkeli in passit and myynti.aika:
             # Lisätään myydyt passit sanakirjan tiettyyn aikaan    
@@ -66,20 +76,24 @@ def myynti(request):
                                  
     # Tallenetaan aika_formiin POST:n aikavalinnat
     aika_form = AikaForm(request.POST or None)
-
+    
     # POST-pyynnöt myynti-sivulta
     if request.method == 'POST':
+        print(request.POST)
         # Otetaan talteen taloyhtio ja asunto -valinnat    
         taloyhtio_id = request.POST.get('taloyhtio')
         asunto_id = request.POST.get('asunto')
         valittu_taloyhtio = Taloyhtio.objects.get(id=taloyhtio_id) if taloyhtio_id else None
         valittu_asunto = Asunto.objects.get(id=asunto_id) if asunto_id else None
+        
 
         # Tallenna -napista painettu, tallennetaan myynti
         if 'tallenna' in request.POST and aika_form.is_valid():
+
             # käytetään aika_formista vain valittua arvoa
             valittu_aika = aika_form.cleaned_data['aika']
-        
+            kateismyynti = request.POST.get('kateismyynti', 'off') == 'on'  # Käteismyynti on valittu
+            print('Käteismyynti:', kateismyynti)
             for artikkeli in Artikkeli.objects.all():
                 kentan_nimi = f'kpl_{artikkeli.id}'
                 kpl_arvo = request.POST.get(kentan_nimi)
@@ -90,12 +104,14 @@ def myynti(request):
                         # käytetään olemassa olevaa Aika-instanssia
                         aika=valittu_aika,
                         taloyhtio=valittu_taloyhtio,
-                        asunto=valittu_asunto               
+                        asunto=valittu_asunto,
+                        kateismyynti=kateismyynti               
                         )
                     
             # Päivitetään myyntisivu heti POST:in jälkeen (URL name = 'myynti')
             return redirect('myynti')                           
         
+        # LISÄÄ KÄTEISMYYNTI!!!!!!
         # Näytä summa -napista painettu, lasketaan ja näytetään summa
         elif 'nayta_summa' in request.POST: 
             # säilytetään kentissä kpl_arvot                    
@@ -122,4 +138,32 @@ def myynti(request):
         })
 
 def excel(request):
+    artikkelit = Artikkeli.objects.all()
+    asunnot = Asunto.objects.all()
+
+    # Alustetaan lista taloyhtioista [[taloyhtio,asunto, {artikkelit, kpl}....]]]
+    taloyhtiot_lista = []
+    for asunto in asunnot:
+        # Alustetaan listat myynti_asunnot, johon talletetaan taloyhtion kaikki asunnot sekä myyty_asunto, johon talletetaan asuntokohtainen myynti
+        myynti_asunnot = []
+        myyty_asunto = []
+        for artikkeli in artikkelit:
+            # Haetaan tietokannasta, onko artikkeleita myyty asunnolle
+            myyty_kpl = kokonaismyynti_asunto_sql(artikkeli.id, asunto.taloyhtio.id, asunto.id)
+            # Jos ei ole myyty artikkelia, palataan alkuun
+            if myyty_kpl == None:
+                continue
+            # Jos artikkelia on myyty asuntoon, lisätään listaan artikkeli ja kpl määrä sanakirjana
+            myyty_asunto.append({artikkeli.artikkeli: myyty_kpl})
+            print('myynti: ', myyty_kpl, myyty_asunto)
+            print()
+            # Lisätään asunnot listaan myydyt artikkelit
+            myynti_asunnot.append(myyty_asunto)
+        # Jos asuntoon on ostettu artikkeleita, lisätään asunto taloyhtiölistaan.
+        if len(myynti_asunnot) > 0:
+            taloyhtiot_lista.append([asunto.taloyhtio.nimi, asunto.nimi, myyty_asunto])
+        
+    print(taloyhtiot_lista)
+    print()
+
     return render(request, 'excel.html')

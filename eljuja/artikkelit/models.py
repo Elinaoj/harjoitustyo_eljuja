@@ -43,12 +43,14 @@ class Asunto(models.Model):
         verbose_name_plural = 'Asunnot'
         managed = True
 
+   
 class Myynti(models.Model):
     artikkeli = models.ForeignKey(Artikkeli, on_delete=models.CASCADE)
     kpl = models.IntegerField(blank=True)
     aika = models.ForeignKey(Aika, on_delete=models.CASCADE, null=True, blank=True)
     taloyhtio = models.ForeignKey(Taloyhtio, on_delete=models.CASCADE, null=True, blank=True)
     asunto = models.ForeignKey(Asunto, on_delete=models.CASCADE, null=True, blank=True)
+    kateismyynti = models.BooleanField(default=False, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Myynnit'
