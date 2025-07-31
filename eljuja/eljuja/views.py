@@ -65,10 +65,12 @@ def myynti(request):
 
     # Käydään kaikki myyntitapahtumat läpi
     for myynti in myynnit: 
+        print('myynti', myynti.artikkeli.artikkeli)
         # Tarkistetaan onko tietty artikkeli passi ja onko myyntiaika merkitty
+        
         if myynti.artikkeli.artikkeli in passit and myynti.aika:
             # Lisätään myydyt passit sanakirjan tiettyyn aikaan    
-            passit_per_aika[myynti.aika.aika] += myynti.kpl         
+            passit_per_aika[myynti.aika.aika] += myynti.kpl  
     
     # sanakirja säilyttämään kpl_arvot kentissä kun "Näytä summa" -nappia painetaan
     myyntisumma = 0
