@@ -11,3 +11,4 @@ db.sqlite3
 
 # .pyc files. Compiled bytecode of Python source files.
 *.py[cod]
+0001_initial.py
