@@ -84,7 +84,7 @@ def myynti(request):
         
         if myynti.artikkeli.artikkeli in passit and myynti.aika:
             # Lisätään myydyt passit sanakirjan tiettyyn aikaan    
-            passit_per_aika[myynti.aika.aika] += myynti.kpl         
+            passit_per_aika[myynti.aika.aika] += myynti.kpl  
     
     # sanakirja säilyttämään kpl_arvot kentissä kun "Näytä summa" -nappia painetaan
     myyntisumma = 0
