@@ -79,7 +79,6 @@ def myynti(request):
 
     # Käydään kaikki myyntitapahtumat läpi
     for myynti in myynnit: 
-        print('myynti', myynti.artikkeli.artikkeli)
         # Tarkistetaan onko tietty artikkeli passi ja onko myyntiaika merkitty
         
         if myynti.artikkeli.artikkeli in passit and myynti.aika:
