@@ -3,9 +3,23 @@ from artikkelit.models import Artikkeli, Myynti, Taloyhtio, Asunto
 from django.http import HttpResponseForbidden, JsonResponse
 from artikkelit.forms import AikaForm
 from django.db import connection
+from .services import get_all_rows
 
 def homepage(request):
     return render(request, 'home.html')
+
+# def master_sheets(request):
+#     """
+#     View to display the master sheets.
+#     """
+#     print('\nmaster_sheets called\n')
+    
+#     # Fetch all rows from the master sheet
+#     master_data = get_all_rows('ÄLÄ KÄYTÄ_KOPIO Master Excel_myyntitestailua varten', 'Myynti Aatelitie 3')
+    
+#     print('\nmaster_data\n', master_data)
+#     # Render the template with the fetched data
+#     return render(request, 'master_sheets.html', {'master_data': master_data})
 
 def get_asunnot(request, taloyhtio_id):
     # Haetaan taloyhtion asunnot ja laitetaan ne listaan
@@ -65,7 +79,9 @@ def myynti(request):
 
     # Käydään kaikki myyntitapahtumat läpi
     for myynti in myynnit: 
+        print('myynti', myynti.artikkeli.artikkeli)
         # Tarkistetaan onko tietty artikkeli passi ja onko myyntiaika merkitty
+        
         if myynti.artikkeli.artikkeli in passit and myynti.aika:
             # Lisätään myydyt passit sanakirjan tiettyyn aikaan    
             passit_per_aika[myynti.aika.aika] += myynti.kpl         
@@ -93,7 +109,7 @@ def myynti(request):
             # käytetään aika_formista vain valittua arvoa
             valittu_aika = aika_form.cleaned_data['aika']
             kateismyynti = request.POST.get('kateismyynti', 'off') == 'on'  # Käteismyynti on valittu
-            print('Käteismyynti:', kateismyynti)
+
             for artikkeli in Artikkeli.objects.all():
                 kentan_nimi = f'kpl_{artikkeli.id}'
                 kpl_arvo = request.POST.get(kentan_nimi)
@@ -111,7 +127,6 @@ def myynti(request):
             # Päivitetään myyntisivu heti POST:in jälkeen (URL name = 'myynti')
             return redirect('myynti')                           
         
-        # LISÄÄ KÄTEISMYYNTI!!!!!!
         # Näytä summa -napista painettu, lasketaan ja näytetään summa
         elif 'nayta_summa' in request.POST: 
             # säilytetään kentissä kpl_arvot                    
