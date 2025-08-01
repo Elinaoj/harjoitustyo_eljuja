@@ -7,6 +7,8 @@ from django.db import connection
 def homepage(request):
     return render(request, 'home.html')
 
+# Master sheet view
+
 def get_asunnot(request, taloyhtio_id):
     # Haetaan taloyhtion asunnot ja laitetaan ne listaan
     asunnot_query = Asunto.objects.filter(taloyhtio_id=taloyhtio_id).values('id', 'nimi')
